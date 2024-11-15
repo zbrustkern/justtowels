@@ -21,8 +21,11 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { notifyNewRequest } from '@/lib/services/notification';
+import { useAuth } from '@/context/auth-context';
 
 export function CreateRequest() {
+  const { userData } = useAuth();
   const [open, setOpen] = useState(false);
   const { createRequest } = useRequests();
   const [formData, setFormData] = useState<{
@@ -39,10 +42,13 @@ export function CreateRequest() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createRequest({
+    const request = await createRequest({
       ...formData,
       status: 'pending',
     });
+    if (userData?.propertyId) {
+      await notifyNewRequest(request, userData.propertyId);
+    }
     setOpen(false);
   };
 

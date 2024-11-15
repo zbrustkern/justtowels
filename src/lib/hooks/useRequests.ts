@@ -30,11 +30,17 @@ export function useRequests() {
   }, []);
 
   const createRequest = async (request: Omit<ServiceRequest, 'id' | 'createdAt' | 'updatedAt'>) => {
-    await addDoc(collection(db, 'requests'), {
+    const docRef = await addDoc(collection(db, 'requests'), {
       ...request,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     });
+    return {
+      id: docRef.id,
+      ...request,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   };
 
   const updateRequest = async (id: string, updates: Partial<ServiceRequest>) => {

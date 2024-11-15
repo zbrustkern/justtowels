@@ -1,4 +1,3 @@
-// src/components/layout/dashboard-layout.tsx
 'use client';
 
 import { useState } from 'react';
@@ -6,9 +5,11 @@ import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
 import { Hotel, Users, BellRing, LogOut, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { NotificationDrawer } from '@/components/notifications/notification-drawer';
+
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-    const { signOut } = useAuth();
+    const { signOut, userData } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
     return (
@@ -27,6 +28,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="h-full flex flex-col">
             <div className="p-4">
               <h2 className="text-xl font-bold">Just Towels</h2>
+              <NotificationDrawer />
             </div>
             
             <nav className="flex-1 p-4 space-y-2">
@@ -38,10 +40,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <BellRing className="w-5 h-5 mr-3" />
                 Requests
               </Link>
+              {userData?.role === 'admin' && (
               <Link href="/dashboard/staff" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
                 <Users className="w-5 h-5 mr-3" />
                 Staff
               </Link>
+            )}
             </nav>
   
             <div className="p-4 border-t">

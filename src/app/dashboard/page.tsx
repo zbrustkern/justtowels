@@ -1,34 +1,44 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+'use client';
+
+import { useAuth } from '@/context/auth-context';
+import { HousekeepingTaskBoard } from '@/components/staff/housekeeping/task-board';
+import { CheckInBoard } from '@/components/staff/front-desk/check-in-board';
+
 
 export default function DashboardPage() {
+  const { userData } = useAuth();
+
+  if (userData?.role === 'housekeeping') {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Housekeeping Dashboard</h1>
+        <HousekeepingTaskBoard />
+      </div>
+    );
+  }
+
+  if (userData?.role === 'front_desk') {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Front Desk Dashboard</h1>
+        <CheckInBoard />
+      </div>
+    );
+  }
+
+  // Admin sees both
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Property Overview</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Rooms</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">24</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Requests</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">3</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Occupancy Rate</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">85%</p>
-          </CardContent>
-        </Card>
+    <div className="space-y-8">
+      <h1 className="text-3xl font-bold">Hotel Overview</h1>
+      
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Front Desk</h2>
+        <CheckInBoard />
+      </div>
+
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Housekeeping</h2>
+        <HousekeepingTaskBoard />
       </div>
     </div>
   );
