@@ -6,13 +6,16 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase-client';
 
-
-export type UserRole = 'guest' | 'admin' | 'front_desk' | 'housekeeping' | 'maintenance';
+type UserRole = 'guest' | 'admin' | 'front_desk' | 'housekeeping' | 'maintenance';
 
 interface UserData {
   role: UserRole;
@@ -26,7 +29,10 @@ interface AuthContextType {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, userData: UserData) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
+  sendVerificationEmail: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   hasPermission: (requiredRoles: UserRole[]) => boolean;
 }
 
@@ -62,10 +68,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, userData: UserData) => {
     const credential = await createUserWithEmailAndPassword(auth, email, password);
     await setDoc(doc(db, 'users', credential.user.uid), userData);
+    await sendEmailVerification(credential.user);
+  };
+
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const credential = await signInWithPopup(auth, provider);
+    
+    // Check if user data exists
+    const docRef = doc(db, 'users', credential.user.uid);
+    const docSnap = await getDoc(docRef);
+    
+    if (!docSnap.exists()) {
+      // Create new user data for Google sign-in
+      const userData = {
+        role: 'guest' as UserRole,
+        name: credential.user.displayName || '',
+        email: credential.user.email || '',
+      };
+      await setDoc(docRef, userData);
+    }
   };
 
   const signOut = async () => {
     await firebaseSignOut(auth);
+  };
+
+  const sendVerificationEmail = async () => {
+    if (user && !user.emailVerified) {
+      await sendEmailVerification(user);
+    }
+  };
+
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
   };
 
   const hasPermission = (requiredRoles: UserRole[]) => {
@@ -79,7 +115,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loading, 
       signIn, 
       signUp, 
+      signInWithGoogle,
       signOut,
+      sendVerificationEmail,
+      resetPassword,
       hasPermission 
     }}>
       {!loading && children}
@@ -94,3 +133,5 @@ export function useAuth() {
   }
   return context;
 }
+
+export type { UserRole, UserData };
