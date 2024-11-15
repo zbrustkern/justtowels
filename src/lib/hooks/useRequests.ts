@@ -1,4 +1,5 @@
-// src/lib/hooks/useRequests.ts
+'use client';
+
 import { useState, useEffect } from 'react';
 import { collection, query, onSnapshot, addDoc, updateDoc, doc, orderBy, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
