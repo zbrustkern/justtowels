@@ -15,7 +15,7 @@ import {
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase-client';
 
-type UserRole = 'guest' | 'admin' | 'front_desk' | 'housekeeping' | 'maintenance';
+type UserRole = 'guest' | 'admin' | 'manager' | 'front_desk' | 'housekeeping' | 'maintenance';
 
 interface UserData {
   role: UserRole;
