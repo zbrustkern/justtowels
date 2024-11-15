@@ -9,7 +9,8 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase-client';
+
 
 export type UserRole = 'guest' | 'admin' | 'front_desk' | 'housekeeping' | 'maintenance';
 

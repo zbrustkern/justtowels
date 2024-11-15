@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { collection, query, onSnapshot, addDoc, updateDoc, doc, orderBy, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '@/lib/firebase-client';
 import { ServiceRequest } from '@/types/request';
 
 export function useRequests() {

@@ -1,5 +1,5 @@
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '@/lib/firebase-client';
 import { NotificationType } from '@/types/notification';
 import { Room } from '@/types/room';
 import { ServiceRequest } from '@/types/request';
