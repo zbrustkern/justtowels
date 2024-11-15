@@ -15,7 +15,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { UserRole } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
 
-export function SignUpForm() {
+export default function SignUpForm() {
   const router = useRouter();
   const { signUp } = useAuth();
   const [error, setError] = useState('');

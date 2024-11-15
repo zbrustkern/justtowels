@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-export function SignInForm() {
+export default function SignInForm() {
   const router = useRouter();
   const { signIn } = useAuth();
   const [error, setError] = useState('');

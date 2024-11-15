@@ -1,6 +1,11 @@
+// src/app/auth/signin/page.tsx
 'use client';
 
-import { SignInForm } from '@/components/auth/sign-in-form';
+import dynamic from 'next/dynamic';
+
+const SignInForm = dynamic(() => import('@/components/auth/sign-in-form'), {
+  ssr: false,
+});
 
 export default function SignInPage() {
   return <SignInForm />;
