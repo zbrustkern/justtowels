@@ -62,16 +62,16 @@ export function RoomDetails({ room, open, onOpenChange }: RoomDetailsProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl h-[80vh]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">Room {room.number} Details</DialogTitle>
+      <DialogContent className="max-w-3xl h-[100vh] md:h-[80vh] p-0">
+        <DialogHeader className="p-4 md:p-6 pb-2 md:pb-4">
+          <DialogTitle className="text-xl md:text-2xl">Room {room.number} Details</DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="info" className="h-full">
-          <TabsList>
-            <TabsTrigger value="info">Room Info</TabsTrigger>
-            <TabsTrigger value="history">Request History</TabsTrigger>
-            <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
+        <Tabs defaultValue="info" className="h-[calc(100%-4rem)]">
+          <TabsList className="px-4 md:px-6">
+            <TabsTrigger value="info" className="flex-1 md:flex-none">Room Info</TabsTrigger>
+            <TabsTrigger value="history" className="flex-1 md:flex-none">Requests</TabsTrigger>
+            <TabsTrigger value="maintenance" className="flex-1 md:flex-none">Maintenance</TabsTrigger>
           </TabsList>
 
           <ScrollArea className="h-[calc(80vh-8rem)] mt-2">

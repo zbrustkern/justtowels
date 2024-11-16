@@ -97,65 +97,65 @@ export function RoomGrid() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
         <div className="flex space-x-2">
-          <Button
+            <Button
             variant={viewMode === 'grid' ? 'default' : 'outline'}
             size="icon"
             onClick={() => setViewMode('grid')}
-          >
+            >
             <Grid className="h-4 w-4" />
-          </Button>
-          <Button
+            </Button>
+            <Button
             variant={viewMode === 'list' ? 'default' : 'outline'}
             size="icon"
             onClick={() => setViewMode('list')}
-          >
+            >
             <List className="h-4 w-4" />
-          </Button>
+            </Button>
         </div>
-      </div>
+    </div>
 
       <RoomFilters filters={filters} onFilterChange={handleFilterChange} />
 
       <div className={
         viewMode === 'grid' 
-          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-          : "space-y-4"
-      }>
-        {filteredRooms.map(room => (
-          <RoomCard
-            key={room.id}
-            room={room}
-            onStatusUpdate={handleStatusUpdate}
-            onCheckIn={handleCheckIn}
-            onCheckOut={handleCheckOut}
-            onViewDetails={handleViewDetails}
-          />
-        ))}
-      </div>
-
-      {selectedRoom && (
-        <>
-          <CheckInDialog
-            room={selectedRoom}
-            open={isCheckInOpen}
-            onOpenChange={setIsCheckInOpen}
-            onCheckIn={handleCheckInSubmit}
-          />
-          <CheckOutDialog
-            room={selectedRoom}
-            open={isCheckOutOpen}
-            onOpenChange={setIsCheckOutOpen}
-            onCheckOut={handleCheckOutSubmit}
-          />
-          <RoomDetails
-            room={selectedRoom}
-            open={isDetailsOpen}
-            onOpenChange={setIsDetailsOpen}
-          />
-        </>
-      )}
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+            : "space-y-4"
+    }>
+      {filteredRooms.map(room => (
+        <RoomCard
+          key={room.id}
+          room={room}
+          onStatusUpdate={handleStatusUpdate}
+          onCheckIn={handleCheckIn}
+          onCheckOut={handleCheckOut}
+          onViewDetails={handleViewDetails}
+        />
+      ))}
     </div>
-  );
+
+    {selectedRoom && (
+      <>
+        <CheckInDialog
+          room={selectedRoom}
+          open={isCheckInOpen}
+          onOpenChange={setIsCheckInOpen}
+          onCheckIn={handleCheckInSubmit}
+        />
+        <CheckOutDialog
+          room={selectedRoom}
+          open={isCheckOutOpen}
+          onOpenChange={setIsCheckOutOpen}
+          onCheckOut={handleCheckOutSubmit}
+        />
+        <RoomDetails
+          room={selectedRoom}
+          open={isDetailsOpen}
+          onOpenChange={setIsDetailsOpen}
+        />
+      </>
+    )}
+  </div>
+  )
 }
