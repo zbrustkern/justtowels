@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import { useRooms } from '@/lib/hooks/useRooms';
 import { useRequests } from '@/lib/hooks/useRequests';
