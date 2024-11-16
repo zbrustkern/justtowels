@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
-import { Hotel, Users, BellRing, LogOut, Menu, X } from 'lucide-react';
+import { Hotel, Users, BellRing, LogOut, Menu, X, Bed, Brush } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NotificationDrawer } from '@/components/notifications/notification-drawer';
 
@@ -52,32 +52,32 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
 
           <nav className="flex-1 p-4 space-y-2">
-            <Link
-              href="/dashboard"
-              className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100"
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              <Hotel className="w-5 h-5 mr-3" />
-              Property
-            </Link>
-            <Link
-              href="/dashboard/requests"
-              className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100"
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              <BellRing className="w-5 h-5 mr-3" />
-              Requests
-            </Link>
-            {userData?.role === 'admin' && (
-              <Link
-                href="/dashboard/staff"
-                className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100"
-                onClick={() => setIsSidebarOpen(false)}
-              >
-                <Users className="w-5 h-5 mr-3" />
-                Staff
+              <Link href="/dashboard" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                <Hotel className="w-5 h-5 mr-3" />
+                Overview
               </Link>
-            )}
+              {(userData?.role === 'admin' || userData?.role === 'manager' || userData?.role === 'front_desk') && (
+                <Link href="/dashboard/rooms" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                  <Bed className="w-5 h-5 mr-3" />
+                  Rooms
+                </Link>
+              )}
+              <Link href="/dashboard/requests" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                <BellRing className="w-5 h-5 mr-3" />
+                Requests
+              </Link>
+              {userData?.role === 'admin' && (
+                <Link href="/dashboard/staff" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                  <Users className="w-5 h-5 mr-3" />
+                  Staff
+                </Link>
+              )}
+              {userData?.role === 'housekeeping' && (
+                <Link href="/dashboard/housekeeping" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                  <Brush className="w-5 h-5 mr-3" />
+                  Tasks
+                </Link>
+              )}
           </nav>
 
           <div className="p-4 border-t">
