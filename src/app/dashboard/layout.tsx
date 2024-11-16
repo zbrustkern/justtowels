@@ -41,14 +41,18 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           </div>
           
           <nav className="flex-1 p-4 space-y-2">
-            <Link href="/dashboard" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
-              <Hotel className="w-5 h-5 mr-3" />
-              Property
-            </Link>
-            <Link href="/dashboard/requests" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
-              <BellRing className="w-5 h-5 mr-3" />
-              Requests
-            </Link>
+          <Link href="/dashboard" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                <Hotel className="w-5 h-5 mr-3" />
+                Overview
+              </Link>
+              <Link href="/dashboard/rooms" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                <Bed className="w-5 h-5 mr-3" />
+                Rooms
+              </Link>
+              <Link href="/dashboard/requests" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
+                <BellRing className="w-5 h-5 mr-3" />
+                Requests
+              </Link>
             {(userData?.role === 'admin' || userData?.role === 'housekeeping') && (
               <Link href="/dashboard/housekeeping" className="flex items-center p-2 text-gray-700 rounded hover:bg-gray-100">
                 <Bed className="w-5 h-5 mr-3" />
